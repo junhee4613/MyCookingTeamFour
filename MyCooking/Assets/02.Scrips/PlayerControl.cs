@@ -78,8 +78,24 @@ public class PlayerControl : MonoBehaviour
                     objOnRighttHand = OBJTemp.transform;
                 }
             }
-
-            Debug.Log(Hit.collider.gameObject.layer);
+            if (objOnLeftHand != null)
+            {
+                if (objOnLeftHand.name.Contains("(Clone)"))
+                {
+                    objOnLeftHand.name = objOnLeftHand.name.Replace("(Clone)","");
+                    Debug.Log("¾Ó");
+                }
+                GameManager.GMinstatnce().InteractIngredientItems(objOnLeftHand.name);
+            }
+            else if(objOnRighttHand != null)
+            {
+                if (objOnRighttHand.name.Contains("(Clone)"))
+                {
+                    objOnRighttHand.name = objOnRighttHand.name.Replace("(Clone)", "");
+                    Debug.Log("¾Ó");
+                }
+                GameManager.GMinstatnce().InteractIngredientItems(objOnRighttHand.name);
+            }
         }
     }
     private void CancelGrapping(Transform handTR)
@@ -89,6 +105,7 @@ public class PlayerControl : MonoBehaviour
             if (handTR == leftHandTR)
             {
                 objOnLeftHand.parent = null;
+                objOnLeftHand= null;
             }
         }
         else if (objOnRighttHand != null && handTR == rightHandTR)
@@ -96,6 +113,7 @@ public class PlayerControl : MonoBehaviour
             if (handTR == rightHandTR)
             {
                 objOnRighttHand.parent = null;
+                objOnRighttHand = null;
             }
         }
     }
