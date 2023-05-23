@@ -33,7 +33,7 @@ public class Menu : MonoBehaviour
             {
                 menu.SetActive(true);
                 sequence.Append(menu.transform.DOScale(new Vector2(1, 1), 0.5f));
-                sequence.Append(menu.transform.DOPunchScale(new Vector2(0.2f, 0.2f), 0.5f, 1, 1));
+                sequence.Append(menu.transform.DOPunchScale(new Vector2(0.2f, 0.2f), 0.5f, 1, 0.1f));
 
             }
         }
