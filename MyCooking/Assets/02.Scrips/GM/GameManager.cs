@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
     public ingredientList IGList;
     public bool isGuideLineEnabled;
     public GameObject guideSphere;
-    [SerializeField]public Queue<Vector3> IngredPosition = new Queue<Vector3>();
+    public Queue<Vector3> IngredPosition = new Queue<Vector3>();
+    public Queue <GameObject> ingredientCookIndex = new Queue<GameObject>();
     public List<bool> ingredientIsOut = new List<bool>();
     void Start()
     {
@@ -60,7 +61,7 @@ public class GameManager : MonoBehaviour
             guideSphere.transform.position = IngredPosition.Dequeue();
         }
     }
-    public void InteractIngredientItems(string OBJName)
+    public void InteractIngredientItems(GameObject OBJ)
     {
         if (ingredientIsOut.Count != 0)
         {
@@ -68,21 +69,22 @@ public class GameManager : MonoBehaviour
             {
                 foreach (var item in IGList.sheets[0].list)
                 {
-                    if (item.englishName == OBJName && item.index == SelectedFood.ingredientIndex1)
+                    if (item.englishName == OBJ.name && item.index == SelectedFood.ingredientIndex1)
                     {
                         ingredientIsOut[0] = true;
+                        ingredientCookIndex.Enqueue(OBJ);
                         break;
                     }
-
                 }
             }
             else if (ingredientIsOut[1] == false)
             {
                 foreach (var item in IGList.sheets[0].list)
                 {
-                    if (item.englishName == OBJName && item.index == SelectedFood.ingredientIndex2)
+                    if (item.englishName == OBJ.name && item.index == SelectedFood.ingredientIndex2)
                     {
                         ingredientIsOut[1] = true;
+                        ingredientCookIndex.Enqueue(OBJ);
                         break;
                     }
 
@@ -92,9 +94,10 @@ public class GameManager : MonoBehaviour
             {
                 foreach (var item in IGList.sheets[0].list)
                 {
-                    if (item.englishName == OBJName && item.index == SelectedFood.ingredientIndex3)
+                    if (item.englishName == OBJ.name && item.index == SelectedFood.ingredientIndex3)
                     {
                         ingredientIsOut[2] = true;
+                        ingredientCookIndex.Enqueue(OBJ);
                         guideSphere.SetActive(false);
                         break;
                     }

@@ -85,7 +85,7 @@ public class PlayerControl : MonoBehaviour
                     objOnLeftHand.name = objOnLeftHand.name.Replace("(Clone)","");
                     Debug.Log("¾Ó");
                 }
-                GameManager.GMinstatnce().InteractIngredientItems(objOnLeftHand.name);
+                GameManager.GMinstatnce().InteractIngredientItems(objOnLeftHand.gameObject);
             }
             else if(objOnRighttHand != null)
             {
@@ -94,7 +94,7 @@ public class PlayerControl : MonoBehaviour
                     objOnRighttHand.name = objOnRighttHand.name.Replace("(Clone)", "");
                     Debug.Log("¾Ó");
                 }
-                GameManager.GMinstatnce().InteractIngredientItems(objOnRighttHand.name);
+                GameManager.GMinstatnce().InteractIngredientItems(objOnRighttHand.gameObject);
             }
         }
     }
