@@ -81,6 +81,7 @@ public class Induction : MonoBehaviour
         textInduction.text = fireIndex.ToString();
         Debug.Log("단계: " + fireIndex);
         StopCoroutine(TempertureUp());
+        StopCoroutine(TempertureDown());
         StartCoroutine(TempertureUp());
 
 
@@ -95,24 +96,34 @@ public class Induction : MonoBehaviour
         inductionLayer = fireIndex * 0.2f;
         inductionMAT.color = new Color(inductionLayer, 0, 0, 1);
         textInduction.text = fireIndex.ToString();
-        Debug.Log(fireIndex);
+        Debug.Log("단계: " + fireIndex);
+        StopCoroutine(TempertureUp());
+        StopCoroutine(TempertureDown());
+        StartCoroutine(TempertureDown());
     }
     IEnumerator TempertureUp()
     {
-        timeTem = fireIndex;
+        timeTem = fireIndex / fireIndex * 0.05f;
         while (maxTem >= test)
         {
-            timeTem *= 0.98f;
-            test += /*Mathf.Clamp(test, 0, maxTem) **/ fireIndex * timeTem * 0.5f;
-            Debug.Log("온도: " + test);
-            yield return null;
+            timeTem *= 0.9985f;
+            test += timeTem;
+            Debug.Log("온도: " + Mathf.Clamp(test, 0, maxTem));
+            yield return new WaitForSeconds(0.016f);
         }
         
 
     }
+    //온도를 올렸다가 내리면 같은 온도 단계라도 중간에서부터 더 해져 기존과 다른 속도로 올라간다 EX) 0~30도까지는 10초라 했을 때 중간에 온도를 내려 15도로 떨어진 후 다시 온도를 올리면 15~45도까지 10초가 걸린다
     IEnumerator TempertureDown()
     {
-        yield return null;
-
+        timeTem = fireIndex / fireIndex * 0.05f;
+        while (0 <= test)
+        {
+            timeTem *= 0.9985f;
+            test -= timeTem * 0.5f;
+            Debug.Log("온도: " + Mathf.Clamp(test, 0, maxTem));
+            yield return new WaitForSeconds(0.016f);
+        }
     }
 }
