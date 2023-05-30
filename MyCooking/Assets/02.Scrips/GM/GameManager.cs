@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     }
     public void GetIngredientPosition(int foodIndex)//선택한 요리의 재료 포지션값을 받음
     {
-        if (isGuideLineEnabled)
+        if (IngredPosition.Count ==0)
         {
             ingredientIsOut.Clear();
             SelectedFood = foodTable.sheets[0].list[foodIndex];

@@ -9,8 +9,10 @@ public class BowlBase : MonoBehaviour
     public BoxCollider bc;
     protected RaycastHit hit;
     RaycastHit[] CookHit;
+    public Induction IDTTem;
     private void Start()
     {
+        IDTTem = GameObject.Find("InductionIndex").GetComponent<Induction>();
         bc = GetComponent<BoxCollider>();
     }
     private void Update()

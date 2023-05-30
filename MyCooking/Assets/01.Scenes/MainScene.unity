@@ -408,13 +408,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f93a102d7ebca4f80bf6ed4c7e99c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tempSpeed: 0
   timeTem: 0
   speed: 0
-  fireIndex: 0
+  fireLevel: 0
   textInduction: {fileID: 0}
   inductionMAT: {fileID: 2100000, guid: badd09ba8ea5c064db8d54fd466c82d2, type: 2}
   inductionLayer: 0
   inductionDegrees: {fileID: 0}
+  isInductionON: 0
 --- !u!1 &66639372
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,12 @@ public class FryFan : BowlBase
         {
             if (GameManager.GMinstatnce().ingredientCookIndex.Peek().name == hit.collider.gameObject.name)
             {
-                SoundManager.SMInstance().ChangeSFX("FrySound");
+                if (IDTTem.timeTem > 80)
+                {
+                    SoundManager.SMInstance().ChangeSFX("FrySound");
+                    //여기에 요리관련 스크립트 넣으면 될듯
+                    Debug.Log("요리 관련 함수 넣으면 되게땅");
+                }
                 hit.collider.GetComponent<BoxCollider>().enabled = false;
                 GameManager.GMinstatnce().ingredientCookIndex.Dequeue();
                 hit.collider.transform.parent = null;

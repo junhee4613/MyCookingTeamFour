@@ -15,14 +15,11 @@ public class Induction : MonoBehaviour
     public float inductionLayer;                    //인덕션 온도 단계
     public TextMeshProUGUI inductionDegrees;        //온도 표시
     public bool isInductionON;
-    float timerS = 0;
     // Start is called before the first frame update        //인덕션에 있는 숫자를 fireLevel의 값으로 표시하기 위한 테스트용
     void Start()
     {
         textInduction = GetComponent<TextMeshProUGUI>();
-        
-
-
+        inductionMAT.color = new Color(timeTem / 0, 0, 0, 1);
     }
 
     // Update is called once per frame
@@ -34,8 +31,8 @@ public class Induction : MonoBehaviour
             fireLevel += 1;
             speed = 1;
         }
+        SoundManager.SMInstance().ChangeSFX("BTNClickSound");
         inductionLayer = fireLevel * 0.2f;
-        inductionMAT.color = new Color(inductionLayer, 0, 0, 1);
         textInduction.text = fireLevel.ToString();
         Debug.Log("단계: " + fireLevel);
         if (!isInductionON)
@@ -51,8 +48,8 @@ public class Induction : MonoBehaviour
             fireLevel -= 1;
             speed = -1;
         }
+        SoundManager.SMInstance().ChangeSFX("BTNClickSound");
         inductionLayer = fireLevel * 0.2f;
-        inductionMAT.color = new Color(inductionLayer, 0, 0, 1);
         textInduction.text = fireLevel.ToString();
         Debug.Log("단계: " + fireLevel);
         if (!isInductionON)
@@ -71,6 +68,7 @@ public class Induction : MonoBehaviour
             Debug.Log(timeTem = Mathf.SmoothStep(test, 30f * fireLevel, tempSpeed));
             Mathf.Clamp(timeTem, 0, 30 * fireLevel);
             yield return new WaitForSeconds(0.05f);
+            inductionMAT.color = new Color(timeTem / 150, 0, 0, 1);
             if (timeTem >= fireLevel * 29.9)
             {
                 isInductionON = false;
@@ -85,11 +83,12 @@ public class Induction : MonoBehaviour
     {
         StopCoroutine(TemUp());
         isInductionON = true;
-        while (timeTem >= 30)
+        while (timeTem >= 0)
         {
             tempSpeed += 0.005f;
             Debug.Log(timeTem = Mathf.SmoothStep(test, 30f * fireLevel, tempSpeed));
             yield return new WaitForSeconds(0.05f);
+            inductionMAT.color = new Color(timeTem/150, 0, 0, 1);
             if (timeTem <= fireLevel * 30)
             {
                 isInductionON = false;
