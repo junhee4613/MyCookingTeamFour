@@ -13,15 +13,13 @@ public class SoundSliders : MonoBehaviour
     }
     public void OnSliderValue()
     {
-
-        switch (isThisBGMSlider)
+        if (isThisBGMSlider)
         {
-            case true:
-                SoundManager.SMInstance().AS[0].volume = thisSlider.value;
-                break;
-            case false:
-                SoundManager.SMInstance().AS[1].volume = thisSlider.value;
-                break;
+            SoundManager.SMInstance().AS["BGM"].volume = thisSlider.value;
+        }
+        else
+        {
+            SoundManager.SMInstance().AS["SFX"].volume = thisSlider.value;
         }
     }
 }
