@@ -45,6 +45,7 @@ public class PlayerControl : MonoBehaviour
         RaycastHit Hit;
         if (Physics.Raycast(handTR.position, handTR.forward, out Hit, 0.3f, OBJLayers, QueryTriggerInteraction.UseGlobal))
         {
+
             Debug.Log("레이케스터");
             if (Hit.collider.gameObject.layer == 7)
             {
@@ -52,6 +53,11 @@ public class PlayerControl : MonoBehaviour
                 float instExtend = instTemp.GetComponent<BoxCollider>().bounds.extents.z / 2;
                 instTemp.transform.localPosition = Vector3.forward * instExtend;
                 instTemp.transform.localRotation = Quaternion.identity;
+                if (instTemp.gameObject.TryGetComponent<Rigidbody>(out Rigidbody targetRB))
+                {
+                    targetRB.useGravity = false;
+                    targetRB.constraints = RigidbodyConstraints.FreezeAll;
+                }
                 if (handTR == leftHandTR)
                 {
                     objOnLeftHand = instTemp.transform;
@@ -69,6 +75,11 @@ public class PlayerControl : MonoBehaviour
                 float objExtend = OBJTemp.GetComponent<BoxCollider>().bounds.extents.z / 2;
                 OBJTemp.transform.localPosition = Vector3.forward * objExtend;
                 OBJTemp.transform.localRotation = Quaternion.identity;
+                if (OBJTemp.gameObject.TryGetComponent<Rigidbody>(out Rigidbody targetRB))
+                {
+                    targetRB.useGravity = false;
+                    targetRB.constraints = RigidbodyConstraints.FreezeAll;
+                }
                 if (handTR == leftHandTR)
                 {
                     objOnLeftHand = OBJTemp.transform;
@@ -102,19 +113,24 @@ public class PlayerControl : MonoBehaviour
     {
         if (objOnLeftHand != null&& handTR == leftHandTR)
         {
-            if (handTR == leftHandTR)
+            if (objOnLeftHand.gameObject.TryGetComponent<Rigidbody>(out Rigidbody targetRB))
             {
-                objOnLeftHand.parent = null;
-                objOnLeftHand= null;
+                targetRB.useGravity = true;
+                targetRB.constraints = RigidbodyConstraints.None;
             }
+            objOnLeftHand.parent = null;
+            objOnLeftHand= null;
+
         }
         else if (objOnRighttHand != null && handTR == rightHandTR)
         {
-            if (handTR == rightHandTR)
+            if (objOnRighttHand.gameObject.TryGetComponent<Rigidbody>(out Rigidbody targetRB))
             {
-                objOnRighttHand.parent = null;
-                objOnRighttHand = null;
+                targetRB.useGravity = true;
+                targetRB.constraints = RigidbodyConstraints.None;
             }
+            objOnRighttHand.parent = null;
+            objOnRighttHand = null;
         }
     }
     #endregion
