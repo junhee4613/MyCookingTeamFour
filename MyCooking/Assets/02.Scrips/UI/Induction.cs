@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 public class Induction : MonoBehaviour
 {
+    float timer = 0;
     public float tempSpeed;
     public float timeTem;
     private float test = 0;
@@ -19,7 +20,7 @@ public class Induction : MonoBehaviour
     void Start()
     {
         textInduction = GetComponent<TextMeshProUGUI>();
-        inductionMAT.color = new Color(timeTem / 0, 0, 0, 1);
+        inductionMAT.color = new Color(0, 0, 0, 1);
     }
 
     // Update is called once per frame
@@ -35,10 +36,10 @@ public class Induction : MonoBehaviour
         inductionLayer = fireLevel * 0.2f;
         textInduction.text = fireLevel.ToString();
         Debug.Log("단계: " + fireLevel);
-        if (!isInductionON)
-        {
-            StartCoroutine(TemUp());
-        }
+        tempSpeed = 1;
+        /*StopCoroutine(TemDown());
+        StartCoroutine(TemUp());*/
+
 
     }
     public void Down()
@@ -52,53 +53,81 @@ public class Induction : MonoBehaviour
         inductionLayer = fireLevel * 0.2f;
         textInduction.text = fireLevel.ToString();
         Debug.Log("단계: " + fireLevel);
+        tempSpeed = 1;
+        /*StopCoroutine(TemUp());
+        
+        StartCoroutine(TemDown());*/
+
+
+    }
+    /*IEnumerator TemUp()
+    {
         if (!isInductionON)
         {
-            StartCoroutine(TemDown());
+            isInductionON = true;
+            Debug.Log("코루틴 실행UP");
+            while (timeTem <= 150)
+            {
+                tempSpeed += 0.005f;
+                Debug.Log(timeTem = Mathf.SmoothStep(timeTem, 30f * fireLevel, tempSpeed));
+                Mathf.Clamp(timeTem, 0, 30 * fireLevel);
+                yield return new WaitForSeconds(0.05f);
+
+                if (timeTem >= fireLevel * 30)
+                {
+                    isInductionON = false;
+                    tempSpeed = 0;
+                    break;
+                }
+
+            }
+            isInductionON = false;
         }
         
     }
-    IEnumerator TemUp()
-    {
-        StopCoroutine(TemDown());
-        isInductionON = true;
-        while (timeTem <= 150)
-        {
-            tempSpeed += 0.005f;
-            Debug.Log(timeTem = Mathf.SmoothStep(test, 30f * fireLevel, tempSpeed));
-            Mathf.Clamp(timeTem, 0, 30 * fireLevel);
-            yield return new WaitForSeconds(0.05f);
-            inductionMAT.color = new Color(timeTem / 150, 0, 0, 1);
-            if (timeTem >= fireLevel * 29.9)
-            {
-                isInductionON = false;
-                tempSpeed = 0;
-                test = timeTem;
-                break;
-            }
-        }
-        isInductionON = false;
-    }
     IEnumerator TemDown()
     {
-        StopCoroutine(TemUp());
-        isInductionON = true;
-        while (timeTem >= 0)
+        if (!isInductionON)
         {
-            tempSpeed += 0.005f;
-            Debug.Log(timeTem = Mathf.SmoothStep(test, 30f * fireLevel, tempSpeed));
-            yield return new WaitForSeconds(0.05f);
-            inductionMAT.color = new Color(timeTem/150, 0, 0, 1);
-            if (timeTem <= fireLevel * 30)
+            isInductionON = true;
+            Debug.Log("코루틴 실행Down");
+            while (timeTem >= 0)
             {
-                isInductionON = false;
+                tempSpeed += 0.005f;
+                Debug.Log(timeTem = Mathf.SmoothStep(timeTem, 30f * fireLevel, tempSpeed));
+                yield return new WaitForSeconds(0.05f);
+                inductionMAT.color = new Color(timeTem / 150, 0, 0, 1);
+                if (timeTem == fireLevel * 30*//* && timeTem / fireLevel > 30*//*)
+                {
+                    isInductionON = false;
+                    tempSpeed = 0;
+                    break;
+                }
+
+            }
+            isInductionON = false;
+        }
+    }*/
+    private void FixedUpdate()
+    {
+
+        Mathf.Clamp(tempSpeed, 0, 1);
+        timer += Time.fixedDeltaTime;
+        if(tempSpeed != 0 && timer >= 0.1f)
+        {
+            tempSpeed -= 0.01f;
+            Debug.Log(timeTem = Mathf.SmoothStep( 30f * fireLevel,timeTem, tempSpeed));
+            timer = 0;
+            inductionMAT.color = new Color(timeTem / 150, 0, 0, 1);
+            if (fireLevel * 30 == timeTem)
+            {
                 tempSpeed = 0;
-                test = timeTem;
-                break;
             }
         }
-        isInductionON = false;
     }
+
+
+
 
     //온도를 올렸다가 내리면 같은 온도 단계라도 중간에서부터 더 해져 기존과 다른 속도로 올라간다 EX) 0~30도까지는 10초라 했을 때 중간에 온도를 내려 15도로 떨어진 후 다시 온도를 올리면 15~45도까지 10초가 걸린다
 
