@@ -8,8 +8,8 @@ public class PlayerControl : MonoBehaviour
     #region º¯¼ö
     private Transform leftHandTR;
     private Transform rightHandTR;
-    private Transform objOnLeftHand;
-    private Transform objOnRighttHand;
+    public Transform objOnLeftHand;
+    public Transform objOnRighttHand;
     public LayerMask OBJLayers;
     #endregion
     private void Awake()

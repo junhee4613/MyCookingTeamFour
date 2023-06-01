@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,7 +16,8 @@ public class GameManager : MonoBehaviour
     public Queue<Vector3> IngredPosition = new Queue<Vector3>();
     public Queue <GameObject> ingredientCookIndex = new Queue<GameObject>();
     public List<bool> ingredientIsOut = new List<bool>();
-    void Start()
+    public Image timerUI;
+    private void Awake()
     {
         SelectedFood = null;
         if (gm != null)
@@ -30,6 +32,7 @@ public class GameManager : MonoBehaviour
     }
     public void GetIngredientPosition(int foodIndex)//선택한 요리의 재료 포지션값을 받음
     {
+        StartCoroutine(CookTimer());
         if (IngredPosition.Count ==0)
         {
             ingredientIsOut.Clear();
@@ -77,7 +80,7 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
-            else if (ingredientIsOut[1] == false)
+            else if (ingredientIsOut.Count > 1 && ingredientIsOut[1] == false)
             {
                 foreach (var item in IGList.sheets[0].list)
                 {
@@ -90,7 +93,7 @@ public class GameManager : MonoBehaviour
 
                 }
             }
-            else if (ingredientIsOut[2] == false)
+            else if (ingredientIsOut.Count> 2 &&ingredientIsOut[2] == false)
             {
                 foreach (var item in IGList.sheets[0].list)
                 {
@@ -106,5 +109,25 @@ public class GameManager : MonoBehaviour
             }
             IngredientPositionDequeue();
         }
+    }
+    IEnumerator CookTimer(/*float GoalTime*/)
+    {
+        //음식별 시간 넣어줘야함 GoalTime은 음식별 목표시간
+        timerUI.color = Color.green;
+        float timerNum = 1;
+        bool isHalf = false;
+        while (true)
+        {
+            yield return null;
+            timerNum -= Time.deltaTime  /*/GoalTime*/;
+/*            if(timerNum< 2/3 &&!isHalf)
+            {
+                isHalf = true;
+                timerUI.Color = new Color 어쩌구 저쩌구
+            }*/
+            timerUI.fillAmount = timerNum;
+            //목표가 10초일시 10까지는 초록 10~20초까지는 회색 20~30초까지 빨간색
+        }
+        timerUI.color = Color.grey;
     }
 }

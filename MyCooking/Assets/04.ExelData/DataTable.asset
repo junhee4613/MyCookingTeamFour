@@ -17,10 +17,10 @@ MonoBehaviour:
     list:
     - foodIndex: 0
       foodName: "\uAE40\uCE58\uBCF6\uC74C\uBC25"
-      ingredientTextInfo: "\uAE40\uCE58/\uC0C1\uCD94/\uBC25"
+      ingredientTextInfo: "\uAE40\uCE58/\uBC25"
       ingredientIndex1: 2
-      ingredientIndex2: 3
-      ingredientIndex3: 1
+      ingredientIndex2: 1
+      ingredientIndex3: 0
     - foodIndex: 1
       foodName: "\uACE0\uCD94\uCC38\uCE58\uBE44\uBE54\uBC25"
       ingredientTextInfo: "\uACE0\uCD94\uCC38\uCE58/\uC0C1\uCD94/\uBC25"
