@@ -4,16 +4,31 @@ using UnityEngine;
 
 public class CookingUtensils : MonoBehaviour
 {
+    public int layerMask;
+    public List<GameObject> cook = new List<GameObject>();
     // Start is called before the first frame update
-    void Start()
+    void Start()        //음식 터치했을 때 음식이 완성되게 하기 및 해당 도구가 거치대에 걸어지게 하기
     {
-        
+        layerMask = 1 << LayerMask.NameToLayer("Objects");
+        //리스트에서 요리 재료 Data를 가져와서 그 리스트에 있는 것들과 같은 이름을 가진 오브젝트가 이 스크립트를 가진 오브젝트랑 닿았을 때 gameObject.SetActive(false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(transform.position, transform.forward * 10,Color.red );
-        Physics.Raycast(transform.position, transform.forward);
+        Debug.DrawRay(transform.position, transform.forward * 0.5f, Color.red);
+        RaycastHit hitInfo;
+        
+        if (Physics.Raycast(this.transform.position, transform.forward, out hitInfo, 0.7f, layerMask))
+        {
+            for (int i = 0; i < cook.Count; i++)
+            {
+
+            }
+            Debug.Log("반응");
+            cook[0].gameObject.SetActive(false);
+            cook[1].gameObject.SetActive(false);
+        }
     }
 }
