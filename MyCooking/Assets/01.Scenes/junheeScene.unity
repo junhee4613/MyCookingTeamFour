@@ -238,11 +238,14 @@ MonoBehaviour:
     ingredientIndex1: 0
     ingredientIndex2: 0
     ingredientIndex3: 0
+    CookBowl: 
   foodTable: {fileID: 11400000, guid: fd364a9a28ff43d4fbe8ec64b676eb20, type: 2}
   IGList: {fileID: 11400000, guid: 2b6c9686d235aa346ab2d8b5bfe018dc, type: 2}
   isGuideLineEnabled: 1
   guideSphere: {fileID: 0}
   ingredientIsOut: 
+  timerUI: {fileID: 0}
+  isCookDone: 0
 --- !u!4 &47803388
 Transform:
   m_ObjectHideFlags: 0
@@ -2857,7 +2860,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 764029527}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.232, z: 0}
+  m_LocalPosition: {x: -0.54, y: 0.571, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2881,6 +2884,8 @@ MonoBehaviour:
   cook:
   - {fileID: 0}
   - {fileID: 0}
+  fryfan: {fileID: 0}
+  hitnum: 0
 --- !u!65 &764029530
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3200,6 +3205,9 @@ MonoBehaviour:
     m_Bits: 64
   bc: {fileID: 912067469}
   IDTTem: {fileID: 0}
+  PC: {fileID: 0}
+  Center: {x: 0, y: 0, z: 0}
+  cook: []
 --- !u!65 &912067469
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3733,10 +3741,10 @@ RectTransform:
   m_Father: {fileID: 354299214}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90, y: -90}
-  m_SizeDelta: {x: 180, y: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1176638131
 MonoBehaviour:
@@ -6530,7 +6538,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132149328699046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.858, y: 0.74449, z: 0.224}
+  m_LocalPosition: {x: 0.331, y: 0.74449, z: 0.224}
   m_LocalScale: {x: 0.39012, y: 0.39012, z: 0.39012}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6551,6 +6559,7 @@ GameObject:
   - component: {fileID: 6795603037746552353}
   - component: {fileID: 6158388766817356658}
   - component: {fileID: 9168468221489660599}
+  - component: {fileID: 9168468221489660600}
   m_Layer: 6
   m_Name: group3
   m_TagString: Untagged
@@ -6750,6 +6759,7 @@ GameObject:
   - component: {fileID: 2328655199081299362}
   - component: {fileID: 5159025691510029062}
   - component: {fileID: 1779637599971074400}
+  - component: {fileID: 5159025691510029063}
   m_Layer: 6
   m_Name: Rice1
   m_TagString: Untagged
@@ -6809,6 +6819,32 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4555781581107173494}
   m_Mesh: {fileID: -6169830763258662415, guid: 7d54a196476f355448e079c7fa6f9b83, type: 3}
+--- !u!61 &5159025691510029063
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4555781581107173494}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.000000055879354}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.4589432, y: 0.12381735}
+  m_EdgeRadius: 0
 --- !u!33 &6158388766817356658
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7729,3 +7765,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!61 &9168468221489660600
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623420616669747333}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.00000025331974, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.73733497, y: 0.16227497}
+  m_EdgeRadius: 0
