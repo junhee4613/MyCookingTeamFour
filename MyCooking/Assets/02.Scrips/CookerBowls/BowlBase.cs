@@ -12,17 +12,21 @@ public class BowlBase : MonoBehaviour
     public PlayerControl PC;
     bool isOnInduction;
     public Vector3 Center;
+    public Transform FoodPoint;
+    private Vector3 originSize;
     public List<GameObject> cook = new List<GameObject>();
     private void Start()
     {
         IDTTem = GameObject.Find("InductionIndex").GetComponent<Induction>();
         bc = GetComponent<BoxCollider>();
+        originSize = transform.lossyScale;
     }
     private void Update()
     {
         if (transform.parent == null)
         {
             isOnInduction = false;
+            transform.localScale = originSize;
         }
         else
         {
@@ -46,17 +50,18 @@ public class BowlBase : MonoBehaviour
                     }
                     BoxCollider inductionBC = hit.collider.GetComponent<BoxCollider>();
                     transform.parent = hit.collider.transform;
-                    transform.rotation = Quaternion.identity;
-                    transform.localPosition = new Vector3(0,inductionBC.bounds.extents.y,-0.62f);
+
+                    transform.rotation = Quaternion.Euler(0, 180, 0);
+                    transform.localScale = new Vector3(0.00323918881f, 0.00558730587f, 0.00558730355f);
+                    transform.position = hit.transform.position;
                 }
             }
 
         }
-        if (Physics.SphereCast(transform.position, bc.bounds.extents.y, Vector3.up, out hit, 0.3f, whatIsInduction))
+        if (Physics.SphereCast(FoodPoint.position, 0.05f, FoodPoint.up, out hit, 0.3f, whatIsInduction))
         {
             BowlProperty();
         }
-
 
     }
     protected virtual void BowlProperty()

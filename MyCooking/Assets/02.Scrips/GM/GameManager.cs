@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public List<bool> ingredientIsOut = new List<bool>();
     public Image timerUI;
     public bool isCookDone = false;
+    public Slider CookStar;
     private void Awake()
     {
         SelectedFood = null;
@@ -123,7 +124,9 @@ public class GameManager : MonoBehaviour
             {
                 if (isCookDone)
                 {
-                    StopCoroutine(CookTimer(30));
+                    Debug.Log("À½½Ä½ºÅé");
+                    GetCookStars(timerNum);
+                    yield break;
                 }
                 yield return null;
                 timerNum -= Time.deltaTime / GoalTime  /*/GoalTime*/;
@@ -135,5 +138,19 @@ public class GameManager : MonoBehaviour
         }
         timerUI.fillAmount = 1;
         timerUI.color = Color.red;
+        GetCookStars(timerNum);
+    }
+    public void GetCookStars(float timerTime)
+    {
+        if(timerUI.color == Color.red)
+        {
+            CookStar.value = 1;
+            Debug.Log(timerTime * 10);
+        }
+        else if (timerUI.color == Color.yellow)
+        {
+            CookStar.value = 2;
+            Debug.Log((10-(timerTime * 10))+10);
+        }
     }
 }

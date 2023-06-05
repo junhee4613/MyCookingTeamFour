@@ -20,25 +20,11 @@ public class PlayerControl : MonoBehaviour
     #region VR 검지손가락 인풋관리
     public void OnRightTriggerPress(InputAction.CallbackContext ctx)
     {
-        if (ctx.started)
-        {
-            SenseObjects(rightHandTR);
-        }
-        if (ctx.canceled)
-        {
-            CancelGrapping(rightHandTR);
-        }
+
     }
     public void OnLeftTriggerPress(InputAction.CallbackContext ctx)
     {
-        if (ctx.started)
-        {
-            SenseObjects(leftHandTR);
-        }
-        if (ctx.canceled)
-        {
-            CancelGrapping(leftHandTR);
-        }
+
     }
     private void SenseObjects(Transform handTR)
     {
@@ -49,7 +35,7 @@ public class PlayerControl : MonoBehaviour
             Debug.Log("레이케스터");
             if (Hit.collider.gameObject.layer == 7)
             {
-                GameObject instTemp = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/"+Hit.transform.name.Replace(" Installer","")),handTR);
+                GameObject instTemp = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/" + Hit.transform.name.Replace(" Installer", "")), handTR);
                 float instExtend = instTemp.GetComponent<BoxCollider>().bounds.extents.z / 2;
                 instTemp.transform.localPosition = Vector3.forward * instExtend;
                 instTemp.transform.localRotation = Quaternion.identity;
@@ -89,16 +75,28 @@ public class PlayerControl : MonoBehaviour
                     objOnRighttHand = OBJTemp.transform;
                 }
             }
+            else if (Hit.collider.gameObject.layer == 9)
+            {
+                GameObject objTemp = Hit.collider.gameObject;
+                if (handTR == leftHandTR)
+                {
+                    StartCoroutine(FreazerRotations(objTemp,leftHandTR.transform));
+                    
+                }
+                else if (handTR == rightHandTR)
+                {
+                    StartCoroutine(FreazerRotations(objTemp, rightHandTR.transform));
+                }
+            }
             if (objOnLeftHand != null)
             {
                 if (objOnLeftHand.name.Contains("(Clone)"))
                 {
-                    objOnLeftHand.name = objOnLeftHand.name.Replace("(Clone)","");
-                    Debug.Log("앙");
+                    objOnLeftHand.name = objOnLeftHand.name.Replace("(Clone)", "");
                 }
                 GameManager.GMinstatnce().InteractIngredientItems(objOnLeftHand.gameObject);
             }
-            else if(objOnRighttHand != null)
+            else if (objOnRighttHand != null)
             {
                 if (objOnRighttHand.name.Contains("(Clone)"))
                 {
@@ -109,9 +107,21 @@ public class PlayerControl : MonoBehaviour
             }
         }
     }
+    IEnumerator FreazerRotations(GameObject target,Transform handDir)
+    {
+        Vector2 lastHandPosition = new Vector2(handDir.transform.position.x, handDir.transform.position.z);
+        float disFromOrigin = 0;
+        while (RightTriggerOn||LeftTriggerOn)
+        {
+            yield return null;
+            disFromOrigin = Vector2.Distance(lastHandPosition, new Vector2(handDir.position.x, handDir.position.z));
+            Mathf.Clamp(disFromOrigin, 0, -110);
+            target.transform.rotation = Quaternion.Euler(new Vector3(0, -disFromOrigin * 220, 0));
+        }
+    }
     private void CancelGrapping(Transform handTR)
     {
-        if (objOnLeftHand != null&& handTR == leftHandTR)
+        if (objOnLeftHand != null && handTR == leftHandTR)
         {
             if (objOnLeftHand.gameObject.TryGetComponent<Rigidbody>(out Rigidbody targetRB))
             {
@@ -119,7 +129,7 @@ public class PlayerControl : MonoBehaviour
                 targetRB.constraints = RigidbodyConstraints.None;
             }
             objOnLeftHand.parent = null;
-            objOnLeftHand= null;
+            objOnLeftHand = null;
 
         }
         else if (objOnRighttHand != null && handTR == rightHandTR)
@@ -131,6 +141,39 @@ public class PlayerControl : MonoBehaviour
             }
             objOnRighttHand.parent = null;
             objOnRighttHand = null;
+        }
+    }
+    #endregion
+    #region
+    private bool RightTriggerOn = false;
+
+    public void RightMiddleFinger(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            RightTriggerOn = true;
+            SenseObjects(rightHandTR);
+        }
+        if (ctx.canceled)
+        {
+            RightTriggerOn = false;
+            CancelGrapping(rightHandTR);
+
+        }
+    }
+    private bool LeftTriggerOn = false;
+    public void LeftMiddleFinger(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            LeftTriggerOn = true;
+            SenseObjects(leftHandTR);
+        }
+        if (ctx.canceled)
+        {
+            LeftTriggerOn = false;
+            CancelGrapping(leftHandTR);
+
         }
     }
     #endregion

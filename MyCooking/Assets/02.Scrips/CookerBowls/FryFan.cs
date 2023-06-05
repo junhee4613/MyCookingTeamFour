@@ -19,9 +19,29 @@ public class FryFan : BowlBase
                 }
                 hit.collider.GetComponent<BoxCollider>().enabled = false;
                 GameManager.GMinstatnce().ingredientCookIndex.Dequeue();
+                if (hit.collider.transform == PC.objOnLeftHand)
+                {
+                    PC.objOnLeftHand = null;
+                }
+                else if (hit.collider.transform == PC.objOnRighttHand)
+                {
+                    PC.objOnRighttHand = null;
+                }
+                if (hit.collider.TryGetComponent<Rigidbody>(out Rigidbody targetRB))
+                {
+                    targetRB.constraints = RigidbodyConstraints.FreezeAll;
+                    targetRB.useGravity = false;
+                    Debug.Log("리짓바디 얼어라");
+                }
+
                 hit.collider.transform.parent = null;
                 hit.collider.transform.parent = transform;
-                hit.collider.transform.localPosition = Vector3.zero - (Vector3.up * bc.bounds.extents.y);
+                hit.collider.transform.rotation = Quaternion.identity;
+                hit.collider.transform.localPosition = FoodPoint.localPosition;
+                if (hit.collider.transform.Find("Bowl"))
+                {
+                    hit.collider.transform.Find("Bowl").gameObject.SetActive(false);
+                }
             }
         }
     }
