@@ -17,12 +17,13 @@ public class foodList : ScriptableObject
 	public class Param
 	{
 		
-		public double foodIndex;
+		public int foodIndex;
 		public string foodName;
 		public string ingredientTextInfo;
 		public int ingredientIndex1;
 		public int ingredientIndex2;
 		public int ingredientIndex3;
+		public string CookBowl;
 	}
 }
 

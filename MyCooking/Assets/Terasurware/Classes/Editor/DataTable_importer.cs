@@ -50,12 +50,13 @@ public class DataTable_importer : AssetPostprocessor {
 						
 						foodList.Param p = new foodList.Param ();
 						
-					cell = row.GetCell(0); p.foodIndex = (cell == null ? 0.0 : cell.NumericCellValue);
+					cell = row.GetCell(0); p.foodIndex = (int)(cell == null ? 0 : cell.NumericCellValue);
 					cell = row.GetCell(1); p.foodName = (cell == null ? "" : cell.StringCellValue);
 					cell = row.GetCell(2); p.ingredientTextInfo = (cell == null ? "" : cell.StringCellValue);
 					cell = row.GetCell(3); p.ingredientIndex1 = (int)(cell == null ? 0 : cell.NumericCellValue);
 					cell = row.GetCell(4); p.ingredientIndex2 = (int)(cell == null ? 0 : cell.NumericCellValue);
 					cell = row.GetCell(5); p.ingredientIndex3 = (int)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(6); p.CookBowl = (cell == null ? "" : cell.StringCellValue);
 						s.list.Add (p);
 					}
 					data.sheets.Add(s);

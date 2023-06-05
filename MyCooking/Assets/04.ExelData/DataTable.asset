@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bc3d316ce04dc24abbf2a1f6fa0aee4, type: 3}
+  m_Script: {fileID: 0}
   m_Name: DataTable
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::foodList
   sheets:
   - name: food
     list:
@@ -21,27 +21,32 @@ MonoBehaviour:
       ingredientIndex1: 2
       ingredientIndex2: 1
       ingredientIndex3: 0
-    - foodIndex: 1
+      CookBowl: 
+    - foodIndex: 0
       foodName: "\uACE0\uCD94\uCC38\uCE58\uBE44\uBE54\uBC25"
       ingredientTextInfo: "\uACE0\uCD94\uCC38\uCE58/\uC0C1\uCD94/\uBC25"
       ingredientIndex1: 4
       ingredientIndex2: 3
       ingredientIndex3: 1
-    - foodIndex: 2
+      CookBowl: 
+    - foodIndex: 0
       foodName: "\uAC04\uC7A5\uACC4\uB780\uBC25"
       ingredientTextInfo: "\uAC04\uC7A5/\uACC4\uB780/\uBC25"
       ingredientIndex1: 5
       ingredientIndex2: 6
       ingredientIndex3: 1
-    - foodIndex: 3
-      foodName: "\uAD6D\uBB3C\uB5A2\uBCF5\uC774"
-      ingredientTextInfo: "\uACE0\uCD94\uC7A5/\uB5A1"
-      ingredientIndex1: 7
-      ingredientIndex2: 8
-      ingredientIndex3: 0
-    - foodIndex: 4
+      CookBowl: 
+    - foodIndex: 0
       foodName: "\uC2A4\uD338\uAD6C\uC774"
       ingredientTextInfo: "\uC2A4\uD338"
       ingredientIndex1: 9
       ingredientIndex2: 0
       ingredientIndex3: 0
+      CookBowl: 
+    - foodIndex: 0
+      foodName: "\uACC4\uB780\uD6C4\uB77C\uC774"
+      ingredientTextInfo: "\uACC4\uB780"
+      ingredientIndex1: 6
+      ingredientIndex2: 0
+      ingredientIndex3: 0
+      CookBowl: 
